@@ -1,161 +1,109 @@
-![Qualy Presenter](https://raw.githubusercontent.com/Qualy-org/qualy-presenter/master/src/img/qualy-presenter.png)
+# The Hacker theme
 
-This is a boilerplate to use [Reveal.JS](http://lab.hakim.se/reveal-js/) easily with [Gulp](http://gulpjs.com/), [Pug](https://pugjs.org) and [Stylus](http://learnboost.github.io/stylus/).
+[![Build Status](https://travis-ci.org/pages-themes/hacker.svg?branch=master)](https://travis-ci.org/pages-themes/hacker) [![Gem Version](https://badge.fury.io/rb/jekyll-theme-hacker.svg)](https://badge.fury.io/rb/jekyll-theme-hacker)
 
-To know more about Reveal.js and how to use, [read the docs here](https://github.com/hakimel/reveal.js).
+*Hacker is a Jekyll theme for GitHub Pages. You can [preview the theme to see what it looks like](http://pages-themes.github.io/hacker), or even [use it today](#usage).*
 
-## Getting Started
+![Thumbnail of Hacker](thumbnail.png)
 
-### Demo
+## Usage
 
-You can see the demo [here](http://qualy-org.github.io/qualy-presenter/)
+To use the Hacker theme:
 
-### Installation
+1. Add the following to your site's `_config.yml`:
 
-First of all, install the dependencies to run this boilerplate.
+    ```yml
+    theme: jekyll-theme-hacker
+    ```
 
-- [NodeJS](http://nodejs.org/)
-- [GulpJS](http://gulpjs.com/)
+2. Optionally, if you'd like to preview your site on your computer, add the following to your site's `Gemfile`:
 
-```sh
-# Clone this repository
-$ git clone git@github.com:Qualy-org/qualy-presenter.git new_project
-$ cd new_project
+    ```ruby
+    gem "github-pages", group: :jekyll_plugins
+    ```
 
-# install dependencies
-$ npm install
-# run tasks and serve
-$ npm start
+## Customizing
+
+### Configuration variables
+
+Hacker will respect the following variables, if set in your site's `_config.yml`:
+
+```yml
+title: [The title of your site]
+description: [A short description of your site's purpose]
 ```
 
-With the commands above, you have everything to start.
+Additionally, you may choose to set the following optional variables:
 
-```sh
-├── Readme.md
-├── build
-│   ├── css
-│   │   └── main.css
-│   │   └── theme.css
-│   ├── img
-│   ├── index.html
-│   └── js
-│       ├── main.js
-│       └── vendor
-├── gulp
-│   ├── index.js
-│   ├── paths.js
-│   └── tasks
-├── gulpfile.js
-├── package.json
-└── src
-    ├── img
-    ├── js
-    │   ├── main.js
-    │   └── vendor
-    ├── slides
-    ├── styl
-    │   ├── highlight-themes
-    │   ├── reveal-themes
-    │   ├── vendor
-    │   ├── main.styl
-    │   └── theme.styl
-    └── templates
-        ├── inc
-        │   ├── head.pug
-        │   └── scripts.pug
-        └── index.pug
+```yml
+show_downloads: ["true" or "false" to indicate whether to provide a download URL]
+google_analytics: [Your Google Analytics tracking ID]
 ```
 
-### How to Use
+### Stylesheet
 
-- Write your slides in `src/slides` folder in separated files using the [pug syntax](https://pugjs.org) and add them on `templates/index.pug`.
+If you'd like to add your own custom styles:
 
-- If you want to add another scripts and css use the `templates/inc/` folder and call them in the  `templates/index.pug`.
+1. Create a file called `/assets/css/style.scss` in your site
+2. Add the following content to the top of the file, exactly as shown:
+    ```scss
+    ---
+    ---
 
-- Look for different themes on [src/styl/reveal-themes](https://github.com/Qualy-org/qualy-presenter/tree/master/src/styl/reveal-themes) and call them on [src/styl/theme.styl](https://github.com/Qualy-org/qualy-presenter/blob/master/src/styl/theme.styl).
+    @import "{{ site.theme }}";
+    ```
+3. Add any custom CSS (or Sass, including imports) you'd like immediately after the `@import` line
 
-- For highlight themes you can see on [src/styl/highlight-themes](https://github.com/Qualy-org/qualy-presenter/blob/master/src/styl/highlight-themes/).
+*Note: If you'd like to change the theme's Sass variables, you must set new values before the `@import` line in your stylesheet.*
 
-### How to use Speaker Notes
+### Layouts
 
-![Speaker Notes](https://raw.githubusercontent.com/Qualy-org/qualy-presenter/master/src/img/speaker-notes.png)
+If you'd like to change the theme's HTML layout:
 
-Just add `data-notes` to the section of the slide, like the code bellow:
+1. [Copy the original template](https://github.com/pages-themes/hacker/blob/master/_layouts/default.html) from the theme's repository<br />(*Pro-tip: click "raw" to make copying easier*)
+2. Create a file called `/_layouts/default.html` in your site
+3. Paste the default layout content copied in the first step
+4. Customize the layout as you'd like
 
-```js
-- var notes = 'You can enter anything you want here. Just add data-notes to the section.'
+### Overriding GitHub-generated URLs
 
-section(data-notes=notes)
-  img(src="img/qualy-presenter.png", alt="")
-  p
-    a(href="https://github.com/Qualy-org/qualy-presenter") Look the code on Github <3
-```
+Templates often rely on URLs supplied by GitHub such as links to your repository or links to download your project. If you'd like to override one or more default URLs:
 
-### How to use with git and deploy to Github Pages
+1. Look at [the template source](https://github.com/pages-themes/hacker/blob/master/_layouts/default.html) to determine the name of the variable. It will be in the form of `{{ site.github.zip_url }}`.
+2. Specify the URL that you'd like the template to use in your site's `_config.yml`. For example, if the variable was `site.github.url`, you'd add the following:
+    ```yml
+    github:
+      zip_url: http://example.com/download.zip
+      another_url: another value
+    ```
+3. When your site is built, Jekyll will use the URL you specified, rather than the default one provided by GitHub.
 
-When you clone this repo, every git information will be downloaded to. So, you have to remove all my git stuff to create yours.
+*Note: You must remove the `site.` prefix, and each variable name (after the `github.`) should be indent with two space below `github:`.*
 
-```sh
-# Inside of your project runs to remove git folder.
-rm -Rf .git
-```
+For more information, see [the Jekyll variables documentation](https://jekyllrb.com/docs/variables/).
 
-Next, initialize your git repository:
+## Roadmap
 
-```sh
-# init the repo
-git init
-```
+See the [open issues](https://github.com/pages-themes/hacker/issues) for a list of proposed features (and known issues).
 
-Commit all files:
+## Project philosophy
 
-```sh
-# add all files to commit
-git add .
-# create a commit
-git commit -m "Initial commit"
-```
+The Hacker theme is intended to make it quick and easy for GitHub Pages users to create their first (or 100th) website. The theme should meet the vast majority of users' needs out of the box, erring on the side of simplicity rather than flexibility, and provide users the opportunity to opt-in to additional complexity if they have specific needs or wish to further customize their experience (such as adding custom CSS or modifying the default layout). It should also look great, but that goes without saying.
 
-The first deploy needs to be manual:
+## Contributing
 
-```sh
-# creates a gh-pages branch
-git checkout -b gh-pages
+Interested in contributing to Hacker? We'd love your help. Hacker is an open source project, built one contribution at a time by users like you. See [the CONTRIBUTING file](docs/CONTRIBUTING.md) for instructions on how to contribute.
 
-# push and track the gh-pages branch
-git push --set-upstream origin gh-pages
-```
+### Previewing the theme locally
 
-To do next deploys, you just have to run with gulp:
+If you'd like to preview the theme locally (for example, in the process of proposing a change):
 
-```sh
-# will create a .publish folder with build content
-# and push to gh-pages branch.
-npm run deploy
-```
+1. Clone down the theme's repository (`git clone https://github.com/pages-themes/hacker`)
+2. `cd` into the theme's directory
+3. Run `script/bootstrap` to install the necessary dependencies
+4. Run `bundle exec jekyll serve` to start the preview server
+5. Visit [`localhost:4000`](http://localhost:4000) in your browser to preview the theme
 
-### Tasks
+### Running tests
 
-- `gulp`: Initialize watch for changes and a server(localhost:3000)
-- `gulp js`: execute js files
-- `gulp notes`: copy speaker notes
-- `gulp stylus`: compile stylus files
-- `gulp imagemin`:compress image files
-- `gulp watch`: call for watch files
-- `gulp pug`: compile pug files
-- `gulp deploy-pages`: deploy compiled files at `build` to `github` on branch `gh-pages`.
-
-### Examples
-
-Some presentations using the boilerplate:
-
-- [Criando Experiências com SVG - SEMCOMP 15](http://willianjusten.com.br/semcomp-2015/#/)
-- [Passos para se ter um projeto com qualidade - Imasters 15](http://willianjusten.com.br/imasters-2015/#/)
-- [CSS loves Math - Meetup CSS SP](https://willianjusten.com.br/meetup-css-sp)
-- [JS loves Music - Front in Sampa 16](https://willianjusten.com.br/frontinsampa-16/)
-
-### License
-
-This boilerplate is free and open source software, distributed under the The MIT License. So feel free to use this to create your site without linking back to me or using a disclaimer.
-
-If you’d like to give me credit somewhere on your blog or tweet a shout out to [@willian_justen](https://twitter.com/willian_justen), that would be pretty sweet.
+The theme contains a minimal test suite, to ensure a site with the theme would build successfully. To run the tests, simply run `script/cibuild`. You'll need to run `script/bootstrap` one before the test script will work.
